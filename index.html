@@ -78,10 +78,22 @@
       text-align: center;
     }
 
-    .resultado strong {
-      color: #0E85FE;
-      font-size: 20px;
-    }*/
+/* -------- RESPONSIVE DESIGN -------- */
+    @media (max-width: 600px) {
+      .flex-row {
+        flex-direction: column;
+      }
+
+      .checkbox-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .checkbox-group div {
+        min-width: 100%;
+      }
+    }
+    
   </style>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 </head>
