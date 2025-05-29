@@ -116,7 +116,12 @@
 
     <div class="flex-row">
         <div class="flex-col">
-            <label for="bateriaMantenimiento">Batería en mantenimiento</label>
+            <label for="bateriaMantenimiento">
+              <span style="display: inline-flex; align-items: center; gap: 4px;">
+                  Batería en mantenimiento
+                   <span style="cursor: help; color: red;" title="Cuando el % de batería del iPhone es menor al 80%, el equipo muestra un mensaje de batería en estado de mantenimiento.">ℹ️</span>
+              </span>
+            </label>
             <select id="bateriaMantenimiento">
                 <option value="NO">NO</option>
                 <option value="SI">SI</option>
