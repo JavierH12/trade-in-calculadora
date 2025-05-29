@@ -93,7 +93,7 @@
         min-width: 100%;
       }
     }
-    
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 </head>
@@ -184,6 +184,14 @@
 
       let valorRecibido = safeNumber(equipo["Precio recibido"]);
       let valorVenta = safeNumber(objetivo["Precio venta"]);
+        if (valorRecibido === 0 || valorVenta === 0) {
+          let mensaje = "Equipo no disponible para realizar el cálculo:\n \n ";
+           if (valorRecibido === 0) mensaje += `• "${actual}" no tiene valor de recepción.\n`;
+           if (valorVenta === 0) mensaje += `${deseado}" no tiene precio de venta.`;
+           document.getElementById("resultado").textContent = mensaje;
+            return;
+            }
+
       let descuentoBateria = bateria ? safeNumber(equipo["Batería en mantenimiento"]) : 0;
       let descuentoTapa = tapa ? safeNumber(equipo["Tapa trasera quebrada"]) : 0;
       
@@ -194,19 +202,24 @@
 
       const tarifaServicio = 25;
       const diferencia = (valorVenta - valorRecibido) + tarifaServicio;
+
+      let detalleDescuentos = "";
+      if (bateria) detalleDescuentos += `\nDescuento por batería: $${descuentoBateria.toFixed(2)}`;
+      if (tapa) detalleDescuentos += `\nDescuento por tapa trasera: $${descuentoTapa.toFixed(2)}`;
+
       
 
-      let resultado = `Tu equipo tiene un valor de $${valorRecibido.toFixed(2)}.\n`;
-      if (diferencia > 0) {
-        resultado += `Debes pagar $${diferencia.toFixed(2)} para cambiar al ${deseado}.`;
-      } else if (diferencia < 0) {
-        resultado += `Recibes $${Math.abs(diferencia).toFixed(2)} si entregas tu ${actual} por el ${deseado}.`;
-      } else {
-        resultado += `El cambio es justo, no pagas ni recibes dinero.`;
-      }
-        resultado += `\n\nSe ha aplicado una tarifa de $25 por el servicio de trade-in.`;
+      let resultado = `Recibimos tu ${actual} en $${valorRecibido.toFixed(2)}${detalleDescuentos}\n`;
 
-        document.getElementById("resultado").textContent = resultado;
+
+      if (diferencia > 0) {
+        resultado += `\nSi entregas tu ${actual}, la diferencia a pagar para llevarte el ${deseado} sería de $${diferencia.toFixed(2)}.`;
+      }  else {
+        resultado += `\nSolo realizamos cambios por equipos de gama mas alta.`;
+      }
+        resultado += `\n\n<span style="font-size: 0.7em; color: red;">Se ha aplicado una tarifa de $25 por el servicio de trade-in.</span>`;
+
+        document.getElementById("resultado").innerHTML  = resultado;
     }
   </script>
 </body>
