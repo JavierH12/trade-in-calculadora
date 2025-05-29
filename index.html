@@ -191,8 +191,8 @@
       let valorVenta = safeNumber(objetivo["Precio venta"]);
         if (valorRecibido === 0 || valorVenta === 0) {
           let mensaje = "Equipo no disponible para realizar el cálculo:\n \n ";
-           if (valorRecibido === 0) mensaje += `• "${actual}" no tiene valor de recepción.\n`;
-           if (valorVenta === 0) mensaje += `${deseado}" no tiene precio de venta.`;
+           if (valorRecibido === 0) mensaje += `• "${actual} no tiene valor de recepción.\n`;
+           if (valorVenta === 0) mensaje += `${deseado} no tiene precio de venta.`;
            document.getElementById("resultado").textContent = mensaje;
             return;
             }
