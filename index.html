@@ -41,7 +41,7 @@
       flex-direction: column;
     }
 
-        .checkbox-group {
+       .checkbox-group {
       margin-top: 10px;
       display: flex;
       gap: 20px;
@@ -78,7 +78,7 @@
       text-align: center;
     }
 
-/* -------- RESPONSIVE DESIGN -------- */
+/* -------- RESPONSIVE -------- */
     @media (max-width: 600px) {
       .flex-row {
         flex-direction: column;
@@ -104,12 +104,17 @@
     <div class="flex-row">
       <div class="flex-col">
         <label for="modeloActual">Modelo que entregas:</label>
-        <select id="modeloActual"></select>
+        <select id="modeloActual">
+          <option value="" disabled selected>Seleccionar</option>
+        </select>
+        
       </div>
 
       <div class="flex-col">
         <label for="modeloDeseado">Modelo que deseas:</label>
-        <select id="modeloDeseado"></select>
+        <select id="modeloDeseado">
+          <option value="" disabled selected>Seleccionar</option>
+        </select>
       </div>
 
     </div>
@@ -123,6 +128,7 @@
               </span>
             </label>
             <select id="bateriaMantenimiento">
+                <option value="" disabled selected>Seleccionar</option>
                 <option value="NO">NO</option>
                 <option value="SI">SI</option>
             </select>
@@ -131,6 +137,7 @@
         <div class="flex-col">
             <label for="tapaTrasera">Tapa trasera quebrada</label>
             <select id="tapaTrasera">
+                <option value="" disabled selected>Seleccionar</option>
                 <option value="NO">NO</option>
                 <option value="SI">SI</option>
             </select>
@@ -191,8 +198,8 @@
       let valorVenta = safeNumber(objetivo["Precio venta"]);
         if (valorRecibido === 0 || valorVenta === 0) {
           let mensaje = "Equipo no disponible para realizar el cálculo:\n \n ";
-           if (valorRecibido === 0) mensaje += `• "${actual} no tiene valor de recepción.\n`;
-           if (valorVenta === 0) mensaje += `${deseado} no tiene precio de venta.`;
+           if (valorRecibido === 0) mensaje += `${actual} No disponible para la recepción, por favor contactanos via mensajeria.\n`;
+           if (valorVenta === 0) mensaje += `${deseado} No tiene stock disponible.\n`;
            document.getElementById("resultado").textContent = mensaje;
             return;
             }
@@ -222,7 +229,7 @@
       }  else {
         resultado += `\nSolo realizamos cambios por equipos de gama mas alta.`;
       }
-        resultado += `\n\n<span style="font-size: 0.7em; color: red;">Se ha aplicado una tarifa de $25 por el servicio de trade-in.</span>`;
+        resultado += `\n\n<span style="font-size: 0.7em; color: red;">Se ha aplicado una tarifa de $25.00 por el servicio de trade-in.</span>`;
 
         document.getElementById("resultado").innerHTML  = resultado;
     }
