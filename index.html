@@ -89,6 +89,8 @@
       if (bateria) precioRecibido -= descuentoBateria;
       if (tapa) precioRecibido -= descuentoTapa;
 
+      precioRecibido -= 25;
+
       document.getElementById('resultado').textContent = `Monto a recibir: $${precioRecibido}`;
     }
   </script>
