@@ -161,24 +161,38 @@
         const parsed = Papa.parse(csv, { header: true });
         data = parsed.data;
 
-        const modelos = [...new Set(data.map(d => d["Modelo"].trim()).filter(Boolean))];
-
         const selectActual = document.getElementById("modeloActual");
         const selectDeseado = document.getElementById("modeloDeseado");
 
-        modelos.forEach(m => {
-          const option1 = document.createElement("option");
-          const option2 = document.createElement("option");
-          option1.value = m;
-          option1.textContent = m;
-          option2.value = m;
-          option2.textContent = m;
-          selectActual.appendChild(option1);
-          selectDeseado.appendChild(option2);
-        });
+        const modelosRecibidos = [...new Set(data
+        .filter(d => (d["Tipo"] || "").toLowerCase().includes("trade-in"))
+        .map(d => d["Modelo"].trim())
+)];
+
+        const modelosVenta = [...new Set(data
+        .filter(d => (d["Tipo"] || "").toLowerCase().includes("venta"))
+        .map(d => d["Modelo"].trim())
+  )];
+
+        modelosRecibidos.forEach(m => {
+        const option = document.createElement("option");
+         option.value = m;
+         option.textContent = m;
+        selectActual.appendChild(option);
+});
+
+modelosVenta.forEach(m => {
+  const option = document.createElement("option");
+  option.value = m;
+  option.textContent = m;
+  selectDeseado.appendChild(option);
+});
+
       });
 
+
     function calcular() {
+    
       const actual = document.getElementById("modeloActual").value;
       const deseado = document.getElementById("modeloDeseado").value;
       const bateria = document.getElementById("bateriaMantenimiento").value === "SI";
@@ -186,11 +200,12 @@
 
       const equipo = data.find(d => d["Modelo"].trim() === actual.trim());
       const objetivo = data.find(d => d["Modelo"].trim() === deseado.trim());
+      
 
-      if (!equipo || !objetivo) {
-        document.getElementById("resultado").textContent = "No se encontraron los modelos seleccionados.";
-        return;
-      }
+      if (!actual || !deseado || bateria === "" || tapa === "") {
+           document.getElementById("resultado").textContent = "Por favor, completa todos los campos antes de calcular.";
+           return;
+        }
 
       const safeNumber = str => parseFloat((str || "0").replace(",", "").trim()) || 0;
 
